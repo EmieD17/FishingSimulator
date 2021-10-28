@@ -349,7 +349,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -8, 0 ) ]
+"values": [ Vector2( 2, 0 ) ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -672,7 +672,7 @@ frame = 2
 [node name="SpriteWalk" type="Sprite" parent="."]
 position = Vector2( 61.4623, -41.0342 )
 texture = ExtResource( 1 )
-offset = Vector2( -8, 0 )
+offset = Vector2( 2, 0 )
 hframes = 9
 vframes = 4
 frame = 9
