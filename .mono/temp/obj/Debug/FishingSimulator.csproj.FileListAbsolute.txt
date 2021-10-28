@@ -1,0 +1,9 @@
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\bin\Debug\FishingSimulator.dll
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\bin\Debug\FishingSimulator.pdb
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\obj\Debug\FishingSimulator.csproj.AssemblyReference.cache
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\obj\Debug\FishingSimulator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\obj\Debug\FishingSimulator.AssemblyInfoInputs.cache
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\obj\Debug\FishingSimulator.AssemblyInfo.cs
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\obj\Debug\FishingSimulator.csproj.CoreCompileInputs.cache
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\obj\Debug\FishingSimulator.dll
+C:\Users\douce\Desktop\Jeux_Video\ProjetFinal\FishingSimulator\.mono\temp\obj\Debug\FishingSimulator.pdb

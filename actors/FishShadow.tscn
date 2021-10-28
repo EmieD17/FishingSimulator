@@ -54,11 +54,11 @@ scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 offset = Vector2( 0.416667, -1.66667 )
 hframes = 15
-frame = 13
+frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Idle"
+autoplay = "Spin"
 anims/Idle = SubResource( 1 )
 anims/Spin = SubResource( 2 )

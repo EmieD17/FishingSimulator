@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/fishing_full/fishingSimulatorTileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://actors/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://actors/FishShadow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://world/staticBody/PalmTree.tscn" type="PackedScene" id=4]
 
-[node name="World" type="Node2D"]
+[node name="World" type="YSort"]
 position = Vector2( 103.461, -167.084 )
 
 [node name="Beach" type="TileMap" parent="."]
@@ -57,3 +58,15 @@ position = Vector2( 545.874, 232.344 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 215.935, 431.076 )
+
+[node name="StaticBody2D" parent="." instance=ExtResource( 4 )]
+position = Vector2( 336.622, 322.879 )
+
+[node name="StaticBody2D2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 129.8, 250.492 )
+
+[node name="StaticBody2D3" parent="." instance=ExtResource( 4 )]
+position = Vector2( 270.709, 213.411 )
+
+[node name="StaticBody2D4" parent="." instance=ExtResource( 4 )]
+position = Vector2( 454.339, 233.267 )
