@@ -13,11 +13,14 @@ public class Player : KinematicBody2D
 
     AnimationPlayer animationPlayer;
     AnimationTree animationTree;
+    AnimationNodeStateMachinePlayback animationState;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        animationTree = GetNode<AnimationTree>("AnimationTree");
+        animationState = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,15 +32,14 @@ public class Player : KinematicBody2D
         input_vector = input_vector.Normalized();
 
         if(input_vector != Vector2.Zero){
-            if(input_vector.x > 0){
-                animationPlayer.Play("RunRight");
-            }else{
-                animationPlayer.Play("RunLeft");
-            }
+            animationTree.Set("parameters/Idle/blend_position", input_vector);
+            animationTree.Set("parameters/Run/blend_position", input_vector);
+            animationState.Travel("Run");
             velocity = velocity.MoveToward(input_vector * MAX_SPEED, ACCELERATION * delta);
         }
         else{
-            animationPlayer.Play("IdleRight");
+            //animationPlayer.Play("IdleRight");
+            animationState.Travel("Idle");
             velocity = velocity.MoveToward(Vector2.Zero, FRICTION * delta);
         }
 
