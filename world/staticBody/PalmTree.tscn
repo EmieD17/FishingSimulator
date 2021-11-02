@@ -5,10 +5,10 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 4.54178
-height = 4.02594
+height = 1.28544
 
 [node name="PalmTree" type="StaticBody2D"]
-position = Vector2( 0.374573, -26.595 )
+position = Vector2( 0.374573, -10.531 )
 scale = Vector2( 3, 3 )
 script = ExtResource( 2 )
 

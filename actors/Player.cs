@@ -9,23 +9,61 @@ public class Player : KinematicBody2D
     const int ACCELERATION = 700;
     const int MAX_SPEED = 100;
     const int FRICTION = 500;
+
+    enum States{
+        MOVE, 
+        FISHING
+    }
+
+    States state = States.MOVE;
     Vector2 velocity = Vector2.Zero;
 
     AnimationPlayer animationPlayer;
     AnimationTree animationTree;
     AnimationNodeStateMachinePlayback animationState;
+    Sprite spriteWalk;
+    Sprite spriteFishing;
+    Sprite spriteRode;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationTree = GetNode<AnimationTree>("AnimationTree");
+        animationTree.Active = true;
         animationState = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+        spriteWalk = GetNode<Sprite>("SpriteWalk");
+        spriteFishing = GetNode<Sprite>("SpriteFishing");
+        spriteRode = GetNode<Sprite>("SpriteFishingRode");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _PhysicsProcess(float delta)
+    public override void _Process(float delta)
     {
+        switch(state)
+        {
+            case States.MOVE:
+            {
+                Move_State(delta);
+                break;
+            }
+            case States.FISHING:
+            {
+                Fishing_State(delta);
+                break;
+            }
+            default: break;
+        }
+
+       
+    }
+
+    public void Move_State(float delta)
+    {
+        spriteWalk.Visible = true;
+        spriteFishing.Visible = false;
+        spriteRode.Visible = false;
+
         Vector2 input_vector = Vector2.Zero;
         input_vector.x = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
         input_vector.y = Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up");
@@ -34,6 +72,7 @@ public class Player : KinematicBody2D
         if(input_vector != Vector2.Zero){
             animationTree.Set("parameters/Idle/blend_position", input_vector);
             animationTree.Set("parameters/Run/blend_position", input_vector);
+            animationTree.Set("parameters/Fishing/blend_position", input_vector);
             animationState.Travel("Run");
             velocity = velocity.MoveToward(input_vector * MAX_SPEED, ACCELERATION * delta);
         }
@@ -44,5 +83,25 @@ public class Player : KinematicBody2D
         }
 
         velocity = MoveAndSlide(velocity);
+
+        if(Input.IsActionJustPressed("fish")){
+            state = States.FISHING;
+        }
+    }
+    public void Fishing_State(float delta)
+    {
+        velocity = Vector2.Zero;
+        spriteWalk.Visible = false;
+        spriteFishing.Visible = true;
+        spriteRode.Visible = true;
+
+
+        animationState.Travel("Fishing");
+
+    }
+
+    public void ShootRode_Animation_Finished()
+    {
+        state = States.MOVE;
     }
 }

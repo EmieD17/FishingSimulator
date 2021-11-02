@@ -1,18 +1,17 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://assets/Player/output-onlinepngtools.png" type="Texture" id=1]
 [ext_resource path="res://assets/Player/FishingPlayer.png" type="Texture" id=2]
 [ext_resource path="res://assets/fishing_full/Fish Forage Items/inv_items.png" type="Texture" id=3]
 [ext_resource path="res://actors/Player.cs" type="Script" id=4]
 
-[sub_resource type="CapsuleShape2D" id=13]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 19.9086
-height = 7.0
+height = 2.94337
 
-[sub_resource type="Animation" id=1]
-resource_name = "FishingDown"
+[sub_resource type="Animation" id=2]
 length = 0.4
-step = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
 tracks/0/interp = 1
@@ -26,7 +25,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("FishingRode:rotation_degrees")
+tracks/1/path = NodePath("SpriteFishingRode:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -38,7 +37,7 @@ tracks/1/keys = {
 "values": [ -29.3, -2.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("FishingRode:frame")
+tracks/2/path = NodePath("SpriteFishingRode:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -50,7 +49,7 @@ tracks/2/keys = {
 "values": [ 18 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("FishingRode:position")
+tracks/3/path = NodePath("SpriteFishingRode:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -62,7 +61,7 @@ tracks/3/keys = {
 "values": [ Vector2( 76.942, -31.1132 ), Vector2( 83.6692, -18.0793 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("FishingRode:flip_h")
+tracks/4/path = NodePath("SpriteFishingRode:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -73,12 +72,24 @@ tracks/4/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ShootRode_Animation_Finished"
+} ]
+}
 
-[sub_resource type="Animation" id=2]
-resource_name = "FishingLeft"
+[sub_resource type="Animation" id=3]
 length = 0.4
-loop = true
-step = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
 tracks/0/interp = 1
@@ -92,7 +103,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("FishingRode:position")
+tracks/1/path = NodePath("SpriteFishingRode:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -104,7 +115,7 @@ tracks/1/keys = {
 "values": [ Vector2( 22.2838, -59.2832 ), Vector2( 1.68179, -44.1471 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("FishingRode:frame")
+tracks/2/path = NodePath("SpriteFishingRode:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -116,7 +127,7 @@ tracks/2/keys = {
 "values": [ 18 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("FishingRode:rotation_degrees")
+tracks/3/path = NodePath("SpriteFishingRode:rotation_degrees")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -128,7 +139,7 @@ tracks/3/keys = {
 "values": [ 59.6, 1.1 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("FishingRode:flip_h")
+tracks/4/path = NodePath("SpriteFishingRode:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -139,11 +150,24 @@ tracks/4/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ShootRode_Animation_Finished"
+} ]
+}
 
-[sub_resource type="Animation" id=3]
-resource_name = "FishingRight"
+[sub_resource type="Animation" id=4]
 length = 0.4
-step = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
 tracks/0/interp = 1
@@ -157,7 +181,7 @@ tracks/0/keys = {
 "values": [ 3 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("FishingRode:flip_h")
+tracks/1/path = NodePath("SpriteFishingRode:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -169,7 +193,7 @@ tracks/1/keys = {
 "values": [ false ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("FishingRode:frame")
+tracks/2/path = NodePath("SpriteFishingRode:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -181,7 +205,7 @@ tracks/2/keys = {
 "values": [ 18 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("FishingRode:rotation_degrees")
+tracks/3/path = NodePath("SpriteFishingRode:rotation_degrees")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -193,7 +217,7 @@ tracks/3/keys = {
 "values": [ -55.5, 1.0 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("FishingRode:position")
+tracks/4/path = NodePath("SpriteFishingRode:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -204,11 +228,24 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 70.6353, -58.8628 ), Vector2( 93.7599, -44.988 ) ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ShootRode_Animation_Finished"
+} ]
+}
 
-[sub_resource type="Animation" id=4]
-resource_name = "FishingUp"
+[sub_resource type="Animation" id=5]
 length = 0.4
-step = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
 tracks/0/interp = 1
@@ -222,7 +259,7 @@ tracks/0/keys = {
 "values": [ 2 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("FishingRode:rotation_degrees")
+tracks/1/path = NodePath("SpriteFishingRode:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -234,7 +271,7 @@ tracks/1/keys = {
 "values": [ 8.8, -47.0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("FishingRode:position")
+tracks/2/path = NodePath("SpriteFishingRode:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -246,7 +283,7 @@ tracks/2/keys = {
 "values": [ Vector2( 105.953, -41.6244 ), Vector2( 81.9873, -62.2264 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("FishingRode:frame")
+tracks/3/path = NodePath("SpriteFishingRode:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -258,7 +295,7 @@ tracks/3/keys = {
 "values": [ 18 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("FishingRode:flip_h")
+tracks/4/path = NodePath("SpriteFishingRode:flip_h")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -269,9 +306,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/5/type = "method"
+tracks/5/path = NodePath(".")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "ShootRode_Animation_Finished"
+} ]
+}
 
-[sub_resource type="Animation" id=5]
-resource_name = "IdleDown"
+[sub_resource type="Animation" id=6]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -311,8 +361,7 @@ tracks/2/keys = {
 "values": [ Vector2( 8, 0 ) ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "IdleLeft"
+[sub_resource type="Animation" id=7]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -352,8 +401,7 @@ tracks/2/keys = {
 "values": [ Vector2( 2, 0 ) ]
 }
 
-[sub_resource type="Animation" id=7]
-resource_name = "IdleRight"
+[sub_resource type="Animation" id=8]
 length = 0.1
 loop = true
 tracks/0/type = "value"
@@ -393,8 +441,7 @@ tracks/2/keys = {
 "values": [ Vector2( -2, 0 ) ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "IdleUp"
+[sub_resource type="Animation" id=9]
 length = 0.1
 step = 0.001
 tracks/0/type = "value"
@@ -434,7 +481,7 @@ tracks/2/keys = {
 "values": [ Vector2( 8, 0 ) ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=10]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -474,7 +521,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=11]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -514,7 +561,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=12]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -554,7 +601,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=13]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -595,66 +642,98 @@ tracks/2/keys = {
 }
 
 [sub_resource type="AnimationNodeAnimation" id=14]
-animation = "IdleLeft"
+animation = "FishingLeft"
 
 [sub_resource type="AnimationNodeAnimation" id=15]
-animation = "IdleDown"
+animation = "FishingDown"
 
 [sub_resource type="AnimationNodeAnimation" id=16]
-animation = "IdleRight"
+animation = "FishingRight"
 
 [sub_resource type="AnimationNodeAnimation" id=17]
-animation = "IdleUp"
+animation = "FishingUp"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id=18]
 blend_point_0/node = SubResource( 14 )
 blend_point_0/pos = Vector2( -1, 0 )
 blend_point_1/node = SubResource( 15 )
-blend_point_1/pos = Vector2( 0, 1 )
+blend_point_1/pos = Vector2( 0, 1.1 )
 blend_point_2/node = SubResource( 16 )
 blend_point_2/pos = Vector2( 1, 0 )
 blend_point_3/node = SubResource( 17 )
-blend_point_3/pos = Vector2( 0, -1 )
-blend_mode = 1
-
-[sub_resource type="AnimationNodeAnimation" id=19]
-animation = "RunLeft"
-
-[sub_resource type="AnimationNodeAnimation" id=20]
-animation = "RunDown"
-
-[sub_resource type="AnimationNodeAnimation" id=21]
-animation = "RunRight"
-
-[sub_resource type="AnimationNodeAnimation" id=22]
-animation = "RunUp"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id=23]
-blend_point_0/node = SubResource( 19 )
-blend_point_0/pos = Vector2( -1, 0 )
-blend_point_1/node = SubResource( 20 )
-blend_point_1/pos = Vector2( 0, 1.1 )
-blend_point_2/node = SubResource( 21 )
-blend_point_2/pos = Vector2( 1, 0 )
-blend_point_3/node = SubResource( 22 )
 blend_point_3/pos = Vector2( 0, -1.1 )
 min_space = Vector2( -1, -1.1 )
 max_space = Vector2( 1, 1.1 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=26]
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "IdleLeft"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "IdleDown"
 
-[sub_resource type="AnimationNodeStateMachine" id=24]
-states/Idle/node = SubResource( 18 )
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "IdleRight"
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "IdleUp"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=23]
+blend_point_0/node = SubResource( 19 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 20 )
+blend_point_1/pos = Vector2( 0, 1 )
+blend_point_2/node = SubResource( 21 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 22 )
+blend_point_3/pos = Vector2( 0, -1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "RunLeft"
+
+[sub_resource type="AnimationNodeAnimation" id=25]
+animation = "RunDown"
+
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "RunRight"
+
+[sub_resource type="AnimationNodeAnimation" id=27]
+animation = "RunUp"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=28]
+blend_point_0/node = SubResource( 24 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 25 )
+blend_point_1/pos = Vector2( 0, 1.1 )
+blend_point_2/node = SubResource( 26 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 27 )
+blend_point_3/pos = Vector2( 0, -1.1 )
+min_space = Vector2( -1, -1.1 )
+max_space = Vector2( 1, 1.1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=31]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=32]
+
+[sub_resource type="AnimationNodeStateMachine" id=33]
+states/Fishing/node = SubResource( 18 )
+states/Fishing/position = Vector2( 522.037, 231 )
+states/Idle/node = SubResource( 23 )
 states/Idle/position = Vector2( 484.333, 100.333 )
-states/Run/node = SubResource( 23 )
+states/Run/node = SubResource( 28 )
 states/Run/position = Vector2( 737.667, 101.667 )
-transitions = [ "Idle", "Run", SubResource( 26 ), "Run", "Idle", SubResource( 27 ) ]
+transitions = [ "Idle", "Run", SubResource( 29 ), "Run", "Idle", SubResource( 30 ), "Idle", "Fishing", SubResource( 31 ), "Fishing", "Idle", SubResource( 32 ) ]
 start_node = "Idle"
+graph_offset = Vector2( 243.037, 0 )
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=25]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=34]
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( -13.4543, 8.40897 )
@@ -662,14 +741,14 @@ scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 4 )
 
 [node name="SpriteFishing" type="Sprite" parent="."]
-visible = false
 position = Vector2( 38.6518, -29.6384 )
 texture = ExtResource( 2 )
 offset = Vector2( 8, 0 )
 vframes = 4
-frame = 2
+frame = 3
 
 [node name="SpriteWalk" type="Sprite" parent="."]
+visible = false
 position = Vector2( 61.4623, -41.0342 )
 texture = ExtResource( 1 )
 offset = Vector2( 2, 0 )
@@ -677,10 +756,9 @@ hframes = 9
 vframes = 4
 frame = 9
 
-[node name="FishingRode" type="Sprite" parent="."]
-visible = false
-position = Vector2( 105.953, -41.6244 )
-rotation = 0.153589
+[node name="SpriteFishingRode" type="Sprite" parent="."]
+position = Vector2( 70.6353, -58.8628 )
+rotation = -0.968658
 scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 hframes = 9
@@ -690,26 +768,26 @@ frame = 18
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 42, 14 )
 rotation = 1.5708
-shape = SubResource( 13 )
+shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/FishingDown = SubResource( 1 )
-anims/FishingLeft = SubResource( 2 )
-anims/FishingRight = SubResource( 3 )
-anims/FishingUp = SubResource( 4 )
-anims/IdleDown = SubResource( 5 )
-anims/IdleLeft = SubResource( 6 )
-anims/IdleRight = SubResource( 7 )
-anims/IdleUp = SubResource( 8 )
-anims/RunDown = SubResource( 9 )
-anims/RunLeft = SubResource( 10 )
-anims/RunRight = SubResource( 11 )
-anims/RunUp = SubResource( 12 )
+anims/FishingDown = SubResource( 2 )
+anims/FishingLeft = SubResource( 3 )
+anims/FishingRight = SubResource( 4 )
+anims/FishingUp = SubResource( 5 )
+anims/IdleDown = SubResource( 6 )
+anims/IdleLeft = SubResource( 7 )
+anims/IdleRight = SubResource( 8 )
+anims/IdleUp = SubResource( 9 )
+anims/RunDown = SubResource( 10 )
+anims/RunLeft = SubResource( 11 )
+anims/RunRight = SubResource( 12 )
+anims/RunUp = SubResource( 13 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 24 )
+tree_root = SubResource( 33 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource( 25 )
+parameters/playback = SubResource( 34 )
+parameters/Fishing/blend_position = Vector2( 0, 0 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
 parameters/Run/blend_position = Vector2( 0, 0 )
