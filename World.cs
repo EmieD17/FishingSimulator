@@ -36,7 +36,7 @@ public class World : Node
         fishSpawnLocation.Offset = _random.Next();
 
         // Create a Mob instance and add it to the scene.
-        RigidBody2D fishInstance = (RigidBody2D)fishScene.Instance();
+        KinematicBody2D fishInstance = (KinematicBody2D)fishScene.Instance();
         GetNode<Node2D>("YSort/Fish").AddChild(fishInstance);
 
         // Set the mob's direction perpendicular to the path direction.

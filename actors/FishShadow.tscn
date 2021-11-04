@@ -52,19 +52,18 @@ tracks/0/keys = {
 radius = 3.6
 height = 3.26659
 
-[node name="FishShadow" type="RigidBody2D"]
+[node name="FishShadow" type="KinematicBody2D"]
 collision_layer = 4
-gravity_scale = 0.0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-offset = Vector2( 0.282967, -1.13187 )
+offset = Vector2( 0.466327, -1.86531 )
 hframes = 15
-frame = 13
+frame = 14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Spin"
+autoplay = "Idle"
 anims/Idle = SubResource( 1 )
 anims/Spin = SubResource( 2 )
 

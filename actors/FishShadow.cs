@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class FishShadow : RigidBody2D
+public class FishShadow : KinematicBody2D
 {
     // Declare member variables here. Examples:
     // private int a = 2;
@@ -21,14 +21,12 @@ public class FishShadow : RigidBody2D
         var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         if (_random.NextDouble() >= 0.5)
         {
-            animationPlayer.Play("Idle");
+            animationPlayer.Play("Spin");
         } 
-        Sprite sprite = GetNode<Sprite>("Sprite");
-        CollisionShape2D collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+
         float scaleNb = (float)(_random.NextDouble() * (2.5 - 1) + 1);
         Vector2 scale = new Vector2(scaleNb, scaleNb);
-        sprite.Scale = scale;
-        collisionShape.Scale = scale;
+        this.Scale = scale;
         
     }
 
