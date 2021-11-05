@@ -9,6 +9,9 @@ public class World : Node
     [Export]
     public PackedScene Mob;
 
+    [Export]
+    public Godot.Collections.Array fishArray;
+
     private Random _random = new Random();
     private Timer fishSpawningTimer;
     PackedScene fishScene;
@@ -31,26 +34,39 @@ public class World : Node
 
     public void _on_FishSpawningTimer_timeout()
     {
-        // Choose a random location on Path2D.
-        var fishSpawnLocation = GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
-        fishSpawnLocation.Offset = _random.Next();
+        Node2D fishNode = GetNode<Node2D>("YSort/Fish");
+        fishArray = fishNode.GetChildren();
+        GD.Print(fishNode.GetChildCount());
+        GD.Print(fishArray.Count);
+        GD.Print(fishArray[0]);
 
-        // Create a Mob instance and add it to the scene.
-        KinematicBody2D fishInstance = (KinematicBody2D)fishScene.Instance();
-        GetNode<Node2D>("YSort/Fish").AddChild(fishInstance);
+        if(fishArray.Count < 6)
+        {
+            // Choose a random location on Path2D.
+            var fishSpawnLocation = GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
+            fishSpawnLocation.Offset = _random.Next();
 
-        // Set the mob's direction perpendicular to the path direction.
-        float direction = fishSpawnLocation.Rotation + Mathf.Pi / 2;
+            // Create a Mob instance and add it to the scene.
+            KinematicBody2D fishInstance = (KinematicBody2D)fishScene.Instance();
+            GetNode<Node2D>("YSort/Fish").AddChild(fishInstance);
 
-        // Set the mob's position to a random location.
-        fishInstance.Position = fishSpawnLocation.Position;
+            // Set the mob's direction perpendicular to the path direction.
+            float direction = fishSpawnLocation.Rotation + Mathf.Pi / 2;
 
-        // Add some randomness to the direction.
-        direction += RandRange(-Mathf.Pi / 4, Mathf.Pi / 4);
-        fishInstance.Rotation = direction;
+            // Set the mob's position to a random location.
+            fishInstance.Position = fishSpawnLocation.Position;
 
-        // Choose the velocity.
-        //fishInstance.LinearVelocity = new Vector2(RandRange(150f, 250f), 0).Rotated(direction);
+            // Add some randomness to the direction.
+            direction += RandRange(-Mathf.Pi / 4, Mathf.Pi / 4);
+            fishInstance.Rotation = direction;
+
+            // Choose the velocity.
+            fishInstance.MoveAndCollide(new Vector2(RandRange(150f, 250f), 0).Rotated(direction));
+        }
+        else{
+            
+            GetNode<Node2D>("YSort/Fish").GetChild(0).QueueFree();
+        }
 
     }
 

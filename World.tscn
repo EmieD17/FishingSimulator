@@ -78,7 +78,7 @@ curve = SubResource( 1 )
 
 [node name="FishSpawnLocation" type="PathFollow2D" parent="FishPath"]
 position = Vector2( 51, 533.587 )
-rotation = -0.555683
+rotation = -0.555656
 
 [node name="FishSpawningTimer" type="Timer" parent="."]
 wait_time = 2.0

@@ -796,5 +796,4 @@ parameters/Run/blend_position = Vector2( 0, 0 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 38.1406, -6.35675 )
 current = true
-zoom = Vector2( 0.6, 0.6 )
 smoothing_enabled = true
