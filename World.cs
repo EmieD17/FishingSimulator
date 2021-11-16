@@ -42,26 +42,7 @@ public class World : Node
 
         if(fishArray.Count < 6)
         {
-            // Choose a random location on Path2D.
-            var fishSpawnLocation = GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
-            fishSpawnLocation.Offset = _random.Next();
-
-            // Create a Mob instance and add it to the scene.
-            KinematicBody2D fishInstance = (KinematicBody2D)fishScene.Instance();
-            GetNode<Node2D>("YSort/Fish").AddChild(fishInstance);
-
-            // Set the mob's direction perpendicular to the path direction.
-            float direction = fishSpawnLocation.Rotation + Mathf.Pi / 2;
-
-            // Set the mob's position to a random location.
-            fishInstance.Position = fishSpawnLocation.Position;
-
-            // Add some randomness to the direction.
-            direction += RandRange(-Mathf.Pi / 4, Mathf.Pi / 4);
-            fishInstance.Rotation = direction;
-
-            // Choose the velocity.
-            fishInstance.MoveAndCollide(new Vector2(RandRange(150f, 250f), 0).Rotated(direction));
+            createFish();
         }
         else{
             
@@ -69,10 +50,34 @@ public class World : Node
         }
 
     }
+    public void createFish(){
+        // Choose a random location on Path2D.
+            var fishSpawnLocation = GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
+            fishSpawnLocation.Offset = _random.Next();
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+            // Create a Mob instance and add it to the scene.
+            FishShadow fishInstance = (FishShadow)fishScene.Instance();
+            GetNode<Node2D>("YSort/Fish").AddChild(fishInstance);
+
+            // Set the mob's position to a random location.
+            fishInstance.Position = fishSpawnLocation.Position;
+
+            // Add some randomness to the direction.
+            /*Vector2 direction = new Vector2(_random.Next(), _random.Next());
+            if(direction == new Vector2())
+                direction = new Vector2(0, 1);
+            fishInstance.set_direction(direction);
+            */
+
+            // Choose the velocity.
+            //fishInstance.MoveAndCollide(new Vector2(RandRange(150f, 250f), 0).Rotated(direction));
+    }
+
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(float delta)
+    {
+        if(Input.IsActionJustPressed("ui_cancel")) {
+            GetTree().Quit();
+        }
+    }
 }

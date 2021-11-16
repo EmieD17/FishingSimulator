@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[node name="ControleTactile" type="CanvasLayer"]
+
+[node name="Left" type="TouchScreenButton" parent="."]
+position = Vector2( 24.3086, 503.188 )
+rotation = -0.785398
+normal = ExtResource( 1 )
+passby_press = true
+action = "ui_left"
+visibility_mode = 1
+
+[node name="Right" type="TouchScreenButton" parent="."]
+position = Vector2( 189.607, 457.002 )
+rotation = 0.785398
+normal = ExtResource( 1 )
+passby_press = true
+action = "ui_right"
+visibility_mode = 1
+
+[node name="Fish" type="TouchScreenButton" parent="."]
+position = Vector2( 918.865, 495.895 )
+normal = ExtResource( 1 )
+passby_press = true
+action = "fish"
+visibility_mode = 1
+
+[node name="Up" type="TouchScreenButton" parent="."]
+position = Vector2( 94.8036, 422.97 )
+normal = ExtResource( 1 )
+passby_press = true
+action = "ui_up"
+visibility_mode = 1
+
+[node name="Down" type="TouchScreenButton" parent="."]
+position = Vector2( 97.2344, 512.911 )
+normal = ExtResource( 1 )
+passby_press = true
+action = "ui_down"
+visibility_mode = 1
