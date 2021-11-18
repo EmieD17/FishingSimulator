@@ -118,9 +118,7 @@ public class FishShadow : KinematicBody2D
             GD.Print("delete fish (set to false)");
         }
         else{
-            GD.Print("before visible");
             this.Visible = true;
-            GD.Print("before create");
             //createFish(); 
             GD.Print("create fish (set to true)"); 
         }
