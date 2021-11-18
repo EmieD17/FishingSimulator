@@ -76,14 +76,21 @@ position = Vector2( -0.334084, 0.556812 )
 rotation = 1.5708
 shape = SubResource( 3 )
 
-[node name="detection_radius" type="Area2D" parent="."]
+[node name="DetectionRadius" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_radius"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRadius"]
 shape = SubResource( 4 )
 
 [node name="debugLabel" type="Label" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="FishSpawningTimer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="FishSpawningTimer" to="." method="_on_FishSpawningTimer_timeout"]
