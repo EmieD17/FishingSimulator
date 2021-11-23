@@ -6,43 +6,53 @@ public class World : Node
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
-
-
-
-    private Random _random = new Random();
-   
-
+ 
+    RandomNumberGenerator random = new RandomNumberGenerator();
+    private Timer fishSpawningTimer;
+    PackedScene fishScene;
+    public Godot.Collections.Array fishArray;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        fishSpawningTimer = GetNode<Timer>("FishSpawningTimer");
+        fishSpawningTimer.Start();
+        fishScene = ResourceLoader.Load<PackedScene>("res://actors/FishShadow.tscn");
+
+        random.Randomize();
         
-  
-        
+    }
+    public void _on_FishSpawningTimer_timeout()
+    {
+        Node2D fishNode = GetNode<Node2D>("YSort/Fish");
+        fishArray = fishNode.GetChildren();
+
+        if(fishArray.Count < 10)
+        {
+            createFish();
+        }
+        else{
+            GD.Print("Erase!");
+            GetNode<Node2D>("YSort/Fish").GetChild(0).QueueFree();
+        }
+
     }
 
     
-//     public void createFish(FishShadow theFish){
-//         GD.Print("inside top create");
+    public void createFish(){
+        GD.Print("create!");
 
-//         // Choose a random location on Path2D.
-//         var fishSpawnLocation = GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
-//         fishSpawnLocation.Offset = _random.Next();
-//          GD.Print("inside top create 2");
+        // Choose a random location on Path2D.
+        var fishSpawnLocation = GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
+        fishSpawnLocation.Offset = random.Randi();
 
-//         // Set the mob's position to a random location.
-//         theFish.Position = fishSpawnLocation.Position;
+        FishShadow fishInstance = (FishShadow)fishScene.Instance();
 
-//  GD.Print("inside top create 3");
-//         // Add some randomness to the direction.
-//         Vector2 direction = new Vector2(_random.Next(), _random.Next());
+        // Set the mob's position to a random location.
+        fishInstance.Position = fishSpawnLocation.Position;
 
-//  GD.Print("inside top create 4");
-//         GD.Print("direction world" + direction);
-//         theFish.setDirection(direction);
-//          GD.Print("inside top create 5");
-
-//     }
+        GetNode<Node2D>("YSort/Fish").AddChild(fishInstance);
+    }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)

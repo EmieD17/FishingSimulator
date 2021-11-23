@@ -4,15 +4,14 @@ using System.Text;
 
 public class FishShadow : KinematicBody2D
 {
-    const float SEPARATION_WEIGHT = 0.5f;
+    const float SEPARATION_WEIGHT = 5f;
     const float ALIGNMENT_WEIGHT = 0.5f;
-    const float COHESION_WEIGHT = 0.1f;
+    const float COHESION_WEIGHT = 0.05f;
 
-    Vector2 _velocity = Vector2.Zero;
     Vector2 _direction = new Vector2(0, 1);
     int _separation_distance = 20;
 
-    Godot.Collections.Array fishArray;
+    Godot.Collections.Array<FishShadow> _local_flockmates = new Godot.Collections.Array<FishShadow>();
 
     [Export]
     public float _maxSpeed = 1f;
@@ -22,34 +21,42 @@ public class FishShadow : KinematicBody2D
 
     KinematicCollision2D collision;
 
-    static private Random _random = new Random();
+    private Random _random = new Random();
     [Export]
     public Boolean isDebug = true;
 
     Label debugLabel;
 
     private Timer fishSpawningTimer;
-    [Export]
-    public int nbFish;
+
+    Boolean baited = false;
+
 
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        
         var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        if (_random.NextDouble() >= 0.5)
+        //Random Animation
+        /*if (_random.NextDouble() >= 0.5)
         {
             animationPlayer.Play("Spin");
-        } 
-
+        } */
+/*
         fishSpawningTimer = GetNode<Timer>("FishSpawningTimer");
         fishSpawningTimer.WaitTime = _random.Next(2,8);
         fishSpawningTimer.Start();
-
+*/
         float scaleNb = (float)(_random.NextDouble() * (2.5 - 1) + 1);
         Vector2 scale = new Vector2(scaleNb, scaleNb);
         this.Scale = scale;
         isDebug = true;
+        
+        var random = new RandomNumberGenerator();
+        random.Randomize();
+
+        _direction = new Vector2(random.Randfn(), random.Randfn());
     }
     public void debug(){
         if(!isDebug){
@@ -58,13 +65,13 @@ public class FishShadow : KinematicBody2D
         if(debugLabel == null){
             debugLabel = GetNode<Label>("debugLabel");
         }
-        debugLabel.Text = this.Name;
+        debugLabel.Text = Position.ToString();
     }
 
     //Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        if(Visible)
+        if(!baited)
         {
             Rotation = new Vector2(0,1).AngleToPoint(_direction);
             var temp =  _direction * _speed;
@@ -76,70 +83,74 @@ public class FishShadow : KinematicBody2D
                 }
             }
             else{
-                //_direction = _flock_direction();
+                _direction = _flock_direction();
             }
 
-            debug();
+            
+        } else {
+
         }
+
+        debug();
     }
     // Inverts the direction when hitting a collider.
     // This implementation handles colliding with Tilemaps specifically.
     public Vector2 _collision_reaction_direction(KinematicCollision2D collision){
         return (collision.Position - collision.Normal).DirectionTo(this.Position);
     }
-    /*
+    
     public Vector2 _flock_direction(){
         var separation = new Vector2();
         var heading = _direction;
         var cohesion = new Vector2();
 
-    }*/
-
-    public void _on_FishSpawningTimer_timeout()
-    {
-        fishSpawningTimer.WaitTime = _random.Next(2,7);
-        // Node fishNode = this.GetParent();
-        // fishArray = fishNode.GetChildren();
-        // nbFish = fishArray.Count;
-        // GD.Print(fishArray.Count);
-        // int fishIdx = _random.Next(nbFish);
-
-        // FishShadow theFish = (FishShadow)GetNode<Node2D>("YSort/Fish").GetChild(fishIdx);
-        GD.Print(this.Name + " timed out");
-        if(this.Visible == false)
+        foreach (FishShadow flockmate in _local_flockmates)
         {
-           
-            GD.Print("the visible is false");
+            heading += flockmate.get_direction();
+            cohesion += flockmate.Position;
+
+            var distance = this.Position.DistanceTo(flockmate.Position);
+
+            if(distance < _separation_distance){
+              separation -= (flockmate.Position - this.Position).Normalized() * (_separation_distance / distance * _speed);
+            }
+			
         }
 
-        if(this.Visible == true)
-        {
-            this.Visible = false;
-            GD.Print("delete fish (set to false)");
+        if(_local_flockmates.Count > 0){
+            heading /= _local_flockmates.Count;
+            cohesion /= _local_flockmates.Count;
+            var center_direction = Position.DirectionTo(cohesion);
+            var circleShape2D = (CircleShape2D)GetNode<CollisionShape2D>("DetectionRadius/CollisionShape2D").Shape;
+            var center_speed = _maxSpeed * this.Position.DistanceTo(cohesion) / circleShape2D.Radius;
+            cohesion = center_direction * center_speed;
         }
-        else{
-            this.Visible = true;
-            //createFish(); 
-            GD.Print("create fish (set to true)"); 
-        }
+		
+        return (
+            _direction +
+            separation * SEPARATION_WEIGHT +
+            heading * ALIGNMENT_WEIGHT +
+            cohesion * COHESION_WEIGHT
+        ).Clamped(_maxSpeed);
     }
-        public void createFish(){
-        GD.Print("inside top create");
-
-        // Choose a random location on Path2D.
-        var fishSpawnLocation = GetParent().GetParent().GetParent().GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
-        fishSpawnLocation.Offset = _random.Next();
 
 
-        // Set the mob's position to a random location.
-        this.Position = fishSpawnLocation.Position;
-
-        // Add some randomness to the direction.
-        Vector2 direction = new Vector2(_random.Next(), _random.Next());
-
-
+    public Vector2 get_direction(){
+        return _direction;
+    }
+    public void set_direction(Vector2 direction){
         _direction = direction;
+    }
+    public void _on_DetectionRadius_body_entered(KinematicBody2D body){
+        if(body == (KinematicBody2D)this)
+		    return;
 
-
+        if(body.IsInGroup("fish"))
+            _local_flockmates.Add((FishShadow)body);
+    }
+	
+    public void _on_DetectionRadius_body_exited(KinematicBody2D body){
+        if(body.IsInGroup("fish"))
+            _local_flockmates.Remove((FishShadow)body);
     }
 }

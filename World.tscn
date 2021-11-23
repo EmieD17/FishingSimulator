@@ -38,7 +38,7 @@ tile_data = PoolIntArray( -196608, 1, 65537, 196626, 9, 0, 196628, 9, 0, 196632,
 position = Vector2( -4.92065, -1.03459 )
 
 [node name="FishShadow1" parent="YSort/Fish" instance=ExtResource( 3 )]
-position = Vector2( 354.185, 528.816 )
+position = Vector2( 209.618, 582.589 )
 isDebug = true
 
 [node name="FishShadow2" parent="YSort/Fish" instance=ExtResource( 3 )]
@@ -60,6 +60,24 @@ isDebug = true
 [node name="FishShadow6" parent="YSort/Fish" instance=ExtResource( 3 )]
 position = Vector2( 524.992, 516.83 )
 isDebug = true
+
+[node name="FishShadow7" parent="YSort/Fish" instance=ExtResource( 3 )]
+position = Vector2( 276.925, 588.096 )
+
+[node name="FishShadow8" parent="YSort/Fish" instance=ExtResource( 3 )]
+position = Vector2( 249.045, 550.354 )
+
+[node name="FishShadow9" parent="YSort/Fish" instance=ExtResource( 3 )]
+position = Vector2( 329.953, 542.862 )
+
+[node name="FishShadow10" parent="YSort/Fish" instance=ExtResource( 3 )]
+position = Vector2( 420.196, 555.045 )
+
+[node name="FishShadow11" parent="YSort/Fish" instance=ExtResource( 3 )]
+position = Vector2( 361.762, 571.527 )
+
+[node name="FishShadow12" parent="YSort/Fish" instance=ExtResource( 3 )]
+position = Vector2( 318.981, 615.649 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 245.301, 424.402 )
@@ -96,9 +114,14 @@ rotation = -3.0149
 [node name="BackgroundMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -15.0
-autoplay = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseScreen" parent="CanvasLayer" instance=ExtResource( 7 )]
 visible = false
+
+[node name="FishSpawningTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="timeout" from="FishSpawningTimer" to="." method="_on_FishSpawningTimer_timeout"]

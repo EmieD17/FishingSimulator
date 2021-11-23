@@ -55,7 +55,9 @@ height = 3.26659
 [sub_resource type="CircleShape2D" id=4]
 radius = 16.3897
 
-[node name="FishShadow" type="KinematicBody2D"]
+[node name="FishShadow" type="KinematicBody2D" groups=[
+"fish",
+]]
 collision_layer = 4
 script = ExtResource( 2 )
 isDebug = false
@@ -82,15 +84,11 @@ shape = SubResource( 3 )
 shape = SubResource( 4 )
 
 [node name="debugLabel" type="Label" parent="."]
-visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FishSpawningTimer" type="Timer" parent="."]
-wait_time = 10.0
-autostart = true
-
-[connection signal="timeout" from="FishSpawningTimer" to="." method="_on_FishSpawningTimer_timeout"]
+[connection signal="body_entered" from="DetectionRadius" to="." method="_on_DetectionRadius_body_entered"]
+[connection signal="body_exited" from="DetectionRadius" to="." method="_on_DetectionRadius_body_exited"]
