@@ -23,7 +23,7 @@ public class FishShadow : KinematicBody2D
 
     private Random _random = new Random();
     [Export]
-    public Boolean isDebug = true;
+    public Boolean isDebug = false;
 
     Label debugLabel;
 
@@ -51,7 +51,7 @@ public class FishShadow : KinematicBody2D
         float scaleNb = (float)(_random.NextDouble() * (2.5 - 1) + 1);
         Vector2 scale = new Vector2(scaleNb, scaleNb);
         this.Scale = scale;
-        isDebug = true;
+        isDebug = false;
         
         var random = new RandomNumberGenerator();
         random.Randomize();
@@ -73,7 +73,8 @@ public class FishShadow : KinematicBody2D
     {
         if(!baited)
         {
-            Rotation = new Vector2(0,1).AngleToPoint(_direction);
+            //Rotation = new Vector2(0,1).AngleToPoint(_direction);
+            Rotation = _direction.Angle();
             var temp =  _direction * _speed;
 
             collision = MoveAndCollide(temp);

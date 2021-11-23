@@ -32,6 +32,7 @@ public class Player : KinematicBody2D
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationTree.Active = true;
         animationState = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+
         spriteWalk = GetNode<Sprite>("SpriteWalk");
         spriteFishing = GetNode<Sprite>("SpriteFishing");
         spriteRode = GetNode<Sprite>("SpriteFishingRode");
@@ -86,18 +87,36 @@ public class Player : KinematicBody2D
 
         if(Input.IsActionJustPressed("fish")){
             state = States.FISHING;
+
+            velocity = Vector2.Zero;
+            spriteWalk.Visible = false;
+            spriteFishing.Visible = true;
+            spriteRode.Visible = true;
+            
+            animationState.Travel("Fishing");
+            animationTree.Active = false;
         }
+
     }
     public void Fishing_State(float delta)
     {
-        velocity = Vector2.Zero;
-        spriteWalk.Visible = false;
-        spriteFishing.Visible = true;
-        spriteRode.Visible = true;
+        
 
+        if(Input.IsActionJustPressed("fish")){
+            //animationState.Travel("Fishing");
+            animationTree.Active = true;
 
-        animationState.Travel("Fishing");
+        }
+        
+        if(Input.IsActionJustPressed("ui_right")|Input.IsActionJustPressed("ui_down")|Input.IsActionJustPressed("ui_up")|Input.IsActionJustPressed("ui_left")){
+        
+            state = States.MOVE;
 
+            velocity = Vector2.Zero;
+            spriteWalk.Visible = true;
+            spriteFishing.Visible = false;
+            spriteRode.Visible = false;
+        }
     }
 
     public void ShootRode_Animation_Finished()

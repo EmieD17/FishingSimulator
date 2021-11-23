@@ -60,10 +60,12 @@ radius = 16.3897
 ]]
 collision_layer = 4
 script = ExtResource( 2 )
-isDebug = false
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -0.153204 )
 texture = ExtResource( 1 )
+offset = Vector2( 0.108412, -0.433647 )
+flip_h = true
 hframes = 15
 frame = 14
 
@@ -79,8 +81,10 @@ rotation = 1.5708
 shape = SubResource( 3 )
 
 [node name="DetectionRadius" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRadius"]
+position = Vector2( 0.561226, -0.56123 )
 shape = SubResource( 4 )
 
 [node name="debugLabel" type="Label" parent="."]
