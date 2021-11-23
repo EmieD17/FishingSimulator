@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://assets/Player/output-onlinepngtools.png" type="Texture" id=1]
 [ext_resource path="res://assets/Player/FishingPlayer.png" type="Texture" id=2]
@@ -641,6 +641,262 @@ tracks/2/keys = {
 "values": [ Vector2( 8, 0 ), Vector2( -3, 0 ), Vector2( -8, 0 ), Vector2( -3, 0 ), Vector2( -40, 0 ), Vector2( -30, 0 ), Vector2( -26, 0 ), Vector2( -30, 0 ) ]
 }
 
+[sub_resource type="Animation" id=38]
+resource_name = "StartFishingDown"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteFishing:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteFishingRode:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -29.3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteFishingRode:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 18 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteFishingRode:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 76.942, -31.1132 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteFishingRode:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=35]
+resource_name = "StartFishingLeft"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteFishing:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteFishingRode:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.329877 ),
+"update": 0,
+"values": [ Vector2( 22.2838, -59.2832 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteFishingRode:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 18 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteFishingRode:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.277393 ),
+"update": 0,
+"values": [ 59.6 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteFishingRode:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=36]
+resource_name = "StartFishingRight"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteFishing:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteFishingRode:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteFishingRode:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 18 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteFishingRode:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.15932 ),
+"update": 0,
+"values": [ -55.5 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteFishingRode:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.189465 ),
+"update": 0,
+"values": [ Vector2( 70.6353, -58.8628 ) ]
+}
+
+[sub_resource type="Animation" id=37]
+resource_name = "StartFishingUp"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("SpriteFishing:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SpriteFishingRode:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.125 ),
+"update": 0,
+"values": [ 8.8 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SpriteFishingRode:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.112656 ),
+"update": 0,
+"values": [ Vector2( 105.953, -41.6244 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("SpriteFishingRode:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 18 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("SpriteFishingRode:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [sub_resource type="AnimationNodeAnimation" id=14]
 animation = "FishingLeft"
 
@@ -747,20 +1003,19 @@ position = Vector2( 38.6518, -29.6384 )
 texture = ExtResource( 2 )
 offset = Vector2( 8, 0 )
 vframes = 4
-frame = 3
 
 [node name="SpriteWalk" type="Sprite" parent="."]
 visible = false
 position = Vector2( 61.4623, -41.0342 )
 texture = ExtResource( 1 )
-offset = Vector2( 2, 0 )
+offset = Vector2( 8, 0 )
 hframes = 9
 vframes = 4
-frame = 9
+frame = 18
 
 [node name="SpriteFishingRode" type="Sprite" parent="."]
-position = Vector2( 70.6353, -58.8628 )
-rotation = -0.968658
+position = Vector2( 76.942, -31.1132 )
+rotation = -0.511381
 scale = Vector2( 4, 4 )
 texture = ExtResource( 3 )
 hframes = 9
@@ -785,6 +1040,11 @@ anims/RunDown = SubResource( 10 )
 anims/RunLeft = SubResource( 11 )
 anims/RunRight = SubResource( 12 )
 anims/RunUp = SubResource( 13 )
+anims/StartFishingDown = SubResource( 38 )
+anims/StartFishingLeft = SubResource( 35 )
+anims/StartFishingRight = SubResource( 36 )
+anims/StartFishingUp = SubResource( 37 )
+blend_times = [ "Animation collée", "Animation collée", 0.004 ]
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 33 )
