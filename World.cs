@@ -10,8 +10,10 @@ public class World : Node
     RandomNumberGenerator random = new RandomNumberGenerator();
     private Timer fishSpawningTimer;
     PackedScene fishScene;
-    Node2D pointScene;
+
     public Godot.Collections.Array fishArray;
+
+    Player player;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -19,7 +21,8 @@ public class World : Node
         fishSpawningTimer = GetNode<Timer>("FishSpawningTimer");
         fishSpawningTimer.Start();
         fishScene = ResourceLoader.Load<PackedScene>("res://actors/FishShadow.tscn");
-        pointScene = GetNode<Node2D>("CircleCanvasLayer/PointScene");
+        
+        player = GetNode<Player>("YSort/Player");
 
         random.Randomize();
         
@@ -37,7 +40,6 @@ public class World : Node
             //GD.Print("Erase!");
             GetNode<Node2D>("Fish").GetChild(0).QueueFree();
         }
-
     }
 
     
@@ -58,21 +60,12 @@ public class World : Node
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
-    {
-        
+    { 
         
         /*
         if(Input.IsActionJustPressed("ui_cancel")) {
             GetTree().Quit();
         }*/
     }
-    public override void _Input(InputEvent @event)
-    {
-        if(@event is InputEventMouseMotion mouse)
-        {            
-            
-            pointScene.Position = mouse.GlobalPosition;
-        }
-        
-    }
+    
 }
