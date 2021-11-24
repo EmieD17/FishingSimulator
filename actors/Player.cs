@@ -12,6 +12,7 @@ public class Player : KinematicBody2D
 
     enum States{
         MOVE, 
+        FISH,
         FISHING
     }
 
@@ -48,6 +49,11 @@ public class Player : KinematicBody2D
                 Move_State(delta);
                 break;
             }
+            case States.FISH:
+            {
+                Fish_State(delta);
+                break;
+            }
             case States.FISHING:
             {
                 Fishing_State(delta);
@@ -74,6 +80,7 @@ public class Player : KinematicBody2D
             animationTree.Set("parameters/Idle/blend_position", input_vector);
             animationTree.Set("parameters/Run/blend_position", input_vector);
             animationTree.Set("parameters/Fishing/blend_position", input_vector);
+            animationTree.Set("parameters/StartFishing/blend_position", input_vector);
             animationState.Travel("Run");
             velocity = velocity.MoveToward(input_vector * MAX_SPEED, ACCELERATION * delta);
         }
@@ -86,31 +93,32 @@ public class Player : KinematicBody2D
         velocity = MoveAndSlide(velocity);
 
         if(Input.IsActionJustPressed("fish")){
-            state = States.FISHING;
+            state = States.FISH;
 
             velocity = Vector2.Zero;
             spriteWalk.Visible = false;
             spriteFishing.Visible = true;
             spriteRode.Visible = true;
             
-            animationState.Travel("Fishing");
-            animationTree.Active = false;
+            animationState.Travel("StartFishing");
+            GD.Print("let's fish");
         }
 
     }
-    public void Fishing_State(float delta)
+    public void Fish_State(float delta)
     {
         
-
         if(Input.IsActionJustPressed("fish")){
-            //animationState.Travel("Fishing");
-            animationTree.Active = true;
-
+            animationState.Travel("Fishing");
+            GD.Print("I'm fishing!");
+            state = States.FISHING;
         }
         
         if(Input.IsActionJustPressed("ui_right")|Input.IsActionJustPressed("ui_down")|Input.IsActionJustPressed("ui_up")|Input.IsActionJustPressed("ui_left")){
         
             state = States.MOVE;
+            GD.Print("Stop fishing :(");
+            animationState.Travel("Run");
 
             velocity = Vector2.Zero;
             spriteWalk.Visible = true;
@@ -118,9 +126,19 @@ public class Player : KinematicBody2D
             spriteRode.Visible = false;
         }
     }
+    public void Fishing_State(float delta)
+    {
+        
+        if(Input.IsActionJustPressed("fish")){
+            animationState.Travel("StartFishing");
+            //animationPlayer.PlayBackwards();
+            GD.Print("Stop fishing!");
+            state = States.FISH;
+        } 
+    }
 
     public void ShootRode_Animation_Finished()
     {
-        state = States.MOVE;
+        //state = States.MOVE;
     }
 }

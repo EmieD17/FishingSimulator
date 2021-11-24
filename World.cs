@@ -34,7 +34,7 @@ public class World : Node
             createFish();
         }
         else{
-            GD.Print("Erase!");
+            //GD.Print("Erase!");
             GetNode<Node2D>("Fish").GetChild(0).QueueFree();
         }
 
@@ -42,7 +42,7 @@ public class World : Node
 
     
     public void createFish(){
-        GD.Print("create!");
+        //GD.Print("create!");
 
         // Choose a random location on Path2D.
         var fishSpawnLocation = GetNode<PathFollow2D>("FishPath/FishSpawnLocation");
@@ -66,13 +66,12 @@ public class World : Node
             GetTree().Quit();
         }*/
     }
-     public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
     {
         if(@event is InputEventMouseMotion mouse)
         {            
             
             pointScene.Position = mouse.GlobalPosition;
-            GD.Print(mouse.GlobalPosition);
         }
         
     }
