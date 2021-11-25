@@ -30,6 +30,8 @@ public class Player : KinematicBody2D
     PackedScene floaterScene;
     public Floater floater;
     public FishShadow theFish;
+    Label scoreLabel;
+    int score = 0;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -45,6 +47,7 @@ public class Player : KinematicBody2D
 
         circleMouse = GetNode<Node2D>("CanvasLayer/CircleMouse");
         floaterScene = ResourceLoader.Load<PackedScene>("res://actors/Floater.tscn");
+        scoreLabel = GetNode<Label>("CanvasLayer/Score");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -154,11 +157,24 @@ public class Player : KinematicBody2D
         
         if(Input.IsActionJustPressed("fish")){
             if(theFish != null){
-                //if(theFish.state == FishShadow.States.HOOCKED){
+                if(theFish.state == FishShadow.States.HOOCKED){
                     //start to rim
                     //state = States.RIM;
-                    //GD.Print("ready to rim!");
-                //}else{       
+                    GD.Print("I rim!");
+                    score++;
+                    scoreLabel.Text = score.ToString();
+
+                    theFish.QueueFree();
+                    theFish = null;
+                    animationState.Travel("StartFishing");
+                    state = States.FISH;
+                    if(GetNode<Floater>("Rode/Floater") != null){
+                        GetNode<Floater>("Rode/Floater").QueueFree();
+                    }
+                    circleMouse.Visible = true;
+                    
+
+                }else{       
                     //release the fish & floater
                     theFish.SetFree();
                     animationState.Travel("StartFishing");
@@ -169,7 +185,7 @@ public class Player : KinematicBody2D
                     }
                     circleMouse.Visible = true;
                     
-                //}
+                }
             }
             else{
                 //release the floater
