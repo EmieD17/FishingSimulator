@@ -20,7 +20,6 @@ format = 1
 tile_data = PoolIntArray( -65536, 3, 0 )
 
 [node name="PalmTreeCoconut" type="TileMap" parent="."]
-visible = false
 position = Vector2( -17.0601, -7.51864 )
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )
@@ -28,6 +27,7 @@ format = 1
 tile_data = PoolIntArray( -65536, 4, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( -0.0624146, 5.68108 )
 rotation = 1.5708
 shape = SubResource( 1 )

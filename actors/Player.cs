@@ -31,7 +31,7 @@ public class Player : KinematicBody2D
     public Floater floater;
     public FishShadow theFish;
     Label scoreLabel;
-    int score = 0;
+    public AudioStreamPlayer waterSound;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -48,6 +48,8 @@ public class Player : KinematicBody2D
         circleMouse = GetNode<Node2D>("CanvasLayer/CircleMouse");
         floaterScene = ResourceLoader.Load<PackedScene>("res://actors/Floater.tscn");
         scoreLabel = GetNode<Label>("CanvasLayer/Score");
+        scoreLabel.Text = Global.score.ToString();
+        waterSound = GetNode<AudioStreamPlayer>("Audio/WaterBloop");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -123,22 +125,22 @@ public class Player : KinematicBody2D
     {
         
         if(Input.IsActionJustPressed("left_click")){
+            GetNode<AudioStreamPlayer>("Audio/ShootRode").Play();
             var position = circleMouse.Position - (GetViewport().GetVisibleRect().Size / 2) + GetNode<Camera2D>("Camera2D").GlobalPosition;
             var vector = this.GlobalPosition.DirectionTo(position);
             SetAnimationTreeParameters(vector);
-            animationState.Travel("Fishing");
+            
             GD.Print("I'm fishing!");
             state = States.FISHING;
             circleMouse.Visible = false;
-            /*floater.Position = circleMouse.Position;
-            floater.Visible = true;*/
-
-            
 
             floater = (Floater)floaterScene.Instance();
 
             floater.Position = position;
-            GetNode<Node>("Rode").AddChild(floater);  
+            animationState.Travel("Fishing");
+            /*
+            GetNode<Node>("Rode").AddChild(floater); 
+            waterSound.Play(); */
         }
         
         if(Input.IsActionJustPressed("fish")|Input.IsActionJustPressed("ui_right")|Input.IsActionJustPressed("ui_down")|Input.IsActionJustPressed("ui_up")|Input.IsActionJustPressed("ui_left")){
@@ -163,8 +165,9 @@ public class Player : KinematicBody2D
                     //start to rim
                     //state = States.RIM;
                     GD.Print("I rim!");
-                    score++;
-                    scoreLabel.Text = score.ToString();
+                    Global.score++;
+                    scoreLabel.Text = Global.score.ToString();
+                    GetNode<AudioStreamPlayer>("Audio/PopScore").Play();
 
                     theFish.QueueFree();
                     theFish = null;
@@ -208,9 +211,9 @@ public class Player : KinematicBody2D
 
     public void ShootRode_Animation_Finished()
     {
-       // GD.Print("shot the floater!");
-        //floater.Visible = true;
-        //GetNode<Node2D>("Rode").AddChild(floater); 
+        GD.Print("shot the floater!");
+        GetNode<Node>("Rode").AddChild(floater); 
+        waterSound.Play();
     }
 
     public override void _Input(InputEvent @event)
@@ -218,6 +221,21 @@ public class Player : KinematicBody2D
         if(@event is InputEventMouseMotion mouse)
         {            
             circleMouse.Position = mouse.GlobalPosition;
+        }
+        if(@event.IsActionReleased("debug"))
+        {            
+            Global.debug = !Global.debug;
+            GD.Print("debug!");
+        }
+        if(@event.IsActionReleased("world2"))
+        {            
+            if(GetTree().CurrentScene.Name == "World")
+                GetTree().ChangeScene("res://World2.tscn");
+        }
+        if(@event.IsActionReleased("world1"))
+        {            
+            if(GetTree().CurrentScene.Name == "World2")
+                GetTree().ChangeScene("res://World.tscn");
         }
         
     }

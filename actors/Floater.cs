@@ -9,12 +9,14 @@ public class Floater : KinematicBody2D
     Player player;
     RandomNumberGenerator random;
     public AnimationPlayer animationPlayer;
+    CollisionShape2D collisionDetectionZone;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         player = (Player)GetTree().GetNodesInGroup("player")[0];
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        collisionDetectionZone = GetNode<CollisionShape2D>("DetectionZone/CollisionShape2D");
         random = new RandomNumberGenerator();
         random.Randomize();
     }
@@ -36,9 +38,18 @@ public class Floater : KinematicBody2D
         }
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Process(float delta)
+    {
+        debug();
+    }
+    public void debug(){
+        if(!Global.debug){
+            collisionDetectionZone.Hide();
+                
+        }
+        else{
+            collisionDetectionZone.Show();
+        }
+    }
 }

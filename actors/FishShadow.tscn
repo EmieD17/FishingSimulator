@@ -87,6 +87,7 @@ anims/Idle = SubResource( 1 )
 anims/Spin = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0.508712, 0.837745 )
 rotation = 1.71042
 shape = SubResource( 3 )
@@ -98,6 +99,7 @@ collision_layer = 4
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRadius"]
+visible = false
 position = Vector2( 0.982147, 0.701542 )
 shape = SubResource( 4 )
 

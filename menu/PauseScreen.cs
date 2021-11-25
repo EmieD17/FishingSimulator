@@ -7,10 +7,15 @@ public class PauseScreen : Control
     // private int a = 2;
     // private string b = "text";
 
+    VBoxContainer menu;
+    VBoxContainer controls;
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         GetNode<TextureButton>("MarginContainer/CenterContainer/VBoxContainer/Resume").GrabFocus();
+        menu = GetNode<VBoxContainer>("MarginContainer/CenterContainer/VBoxContainer");
+        controls = GetNode<VBoxContainer>("MarginContainer/CenterContainer/Controls");
     }
 
     public override void _Input(InputEvent @event)
@@ -35,6 +40,14 @@ public class PauseScreen : Control
         GetTree().Paused = false;
         GetTree().ChangeSceneTo(TitleScreen);        
     }
+    public void _on_Controls_pressed(){
+        menu.Visible = false;
+        controls.Visible = true;
+    }
+    public void _on_Quit2_pressed(){
+        menu.Visible = true;
+        controls.Visible = false;
+    }
 
 
 
@@ -48,6 +61,10 @@ public class PauseScreen : Control
         if(GetNode<TextureButton>("MarginContainer/CenterContainer/VBoxContainer/Quit").IsHovered())
         {
             GetNode<TextureButton>("MarginContainer/CenterContainer/VBoxContainer/Quit").GrabFocus();
+        }
+        if(GetNode<TextureButton>("MarginContainer/CenterContainer/VBoxContainer/Controls").IsHovered())
+        {
+            GetNode<TextureButton>("MarginContainer/CenterContainer/VBoxContainer/Controls").GrabFocus();
         }
     }
 }

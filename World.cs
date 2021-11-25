@@ -22,6 +22,7 @@ public class World : Node
         fishSpawningTimer.Start();
         fishScene = ResourceLoader.Load<PackedScene>("res://actors/FishShadow.tscn");
         
+        
         player = GetNode<Player>("YSort/Player");
 
         random.Randomize();

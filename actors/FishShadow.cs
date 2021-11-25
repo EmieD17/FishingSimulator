@@ -22,9 +22,6 @@ public class FishShadow : KinematicBody2D
     KinematicCollision2D collision;
 
     private Random _random = new Random();
-    [Export]
-    public Boolean isDebug = false;
-
     Label debugLabel;
     int spin_counter = 0;
     public int spin_goal;
@@ -53,6 +50,9 @@ public class FishShadow : KinematicBody2D
         collisionDetectionRadius = GetNode<CollisionShape2D>("DetectionRadius/CollisionShape2D");
         hoockedTimer = GetNode<Timer>("HoockedTimer");
         player = (Player)GetTree().GetNodesInGroup("player")[0];
+        debugLabel = GetNode<Label>("debugLabel");
+        debugLabel.Visible = false;
+        GetTree().DebugCollisionsHint = true;
         //Random Animation
         /*if (_random.NextDouble() >= 0.5)
         {
@@ -66,7 +66,6 @@ public class FishShadow : KinematicBody2D
         float scaleNb = (float)(_random.NextDouble() * (2.5 - 1) + 1);
         Vector2 scale = new Vector2(scaleNb, scaleNb);
         this.Scale = scale;
-        isDebug = false;
         
         var random = new RandomNumberGenerator();
         random.Randomize();
@@ -74,13 +73,21 @@ public class FishShadow : KinematicBody2D
         _direction = new Vector2(random.Randfn(), random.Randfn());
     }
     public void debug(){
-        if(!isDebug){
-            return ;
+        if(!Global.debug){
+            if(debugLabel.Visible){
+               debugLabel.Visible = false; 
+               collisionDetectionRadius.Hide();
+            }
+                
         }
-        if(debugLabel == null){
-            debugLabel = GetNode<Label>("debugLabel");
+        else{
+            if(!debugLabel.Visible){
+               debugLabel.Visible = true; 
+               collisionDetectionRadius.Show();
+               
+            }
+            debugLabel.Text = "(" +Position.x.ToString("0.00") + ", " + Position.y.ToString("0.00") + ")";
         }
-        debugLabel.Text = Position.ToString();
     }
 
     //Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -143,6 +150,7 @@ public class FishShadow : KinematicBody2D
             animationPlayer.Play("Idle");
             state = States.HOOCKED;
             player.floater.animationPlayer.Play("Hoocked");
+            player.waterSound.Play();
             hoockedTimer.Start();
         }
        

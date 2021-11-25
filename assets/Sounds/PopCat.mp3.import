@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/PopCat.mp3-9ddf99a4fbf48050917b397da0043236.mp3str"
+
+[deps]
+
+source_file="res://assets/Sounds/PopCat.mp3"
+dest_files=[ "res://.import/PopCat.mp3-9ddf99a4fbf48050917b397da0043236.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
