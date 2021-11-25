@@ -128,7 +128,7 @@ public class FishShadow : KinematicBody2D
         _direction = Position.DirectionTo(baitPosition) * _speed * 50;
         Rotation = _direction.Angle();
         _direction = MoveAndSlide(_direction);
-        if(Position.DistanceTo(baitPosition) < 25){
+        if(Position.DistanceTo(baitPosition) < 30){
             animationPlayer.Play("Spin");
             
         } 
@@ -142,12 +142,14 @@ public class FishShadow : KinematicBody2D
         if(spin_counter >= spin_goal){
             animationPlayer.Play("Idle");
             state = States.HOOCKED;
+            player.floater.animationPlayer.Play("Hoocked");
             hoockedTimer.Start();
         }
        
        
     }
     public void SetFree(){
+        player.floater.animationPlayer.Play("Float");
         state = FishShadow.States.SWIMMING; 
         collisionDetectionRadius.Disabled = false; 
         animationPlayer.Play("Idle");
@@ -214,5 +216,6 @@ public class FishShadow : KinematicBody2D
     }
     public void _on_HoockedTimer_timeout(){
         SetFree();
+        hoockedTimer.Stop();
     }
 }

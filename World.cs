@@ -32,7 +32,7 @@ public class World : Node
         Node2D fishNode = GetNode<Node2D>("Fish");
         fishArray = fishNode.GetChildren();
 
-        if(fishArray.Count < 10)
+        if(fishArray.Count < 20)
         {
             createFish();
         }

@@ -151,12 +151,6 @@ public class Player : KinematicBody2D
     }
     public void Fishing_State(float delta)
     {
-        if(theFish != null && theFish.state == FishShadow.States.HOOCKED){
-            floater.animationPlayer.Play("Hoocked");
-        }
-        else{
-            floater.animationPlayer.Play("Float");
-        }
         
         if(Input.IsActionJustPressed("fish")){
             if(theFish != null){
@@ -166,6 +160,7 @@ public class Player : KinematicBody2D
                     //GD.Print("ready to rim!");
                 //}else{       
                     //release the fish & floater
+                    theFish.SetFree();
                     animationState.Travel("StartFishing");
                     GD.Print("Stop fishing!");
                     state = States.FISH;
@@ -173,18 +168,18 @@ public class Player : KinematicBody2D
                         GetNode<Floater>("Rode/Floater").QueueFree();
                     }
                     circleMouse.Visible = true;
-                    theFish.SetFree();
+                    
                 //}
             }
             else{
                 //release the floater
                 animationState.Travel("StartFishing");
-                    GD.Print("Stop fishing!");
-                    state = States.FISH;
-                    if(GetNode<Floater>("Rode/Floater") != null){
-                        GetNode<Floater>("Rode/Floater").QueueFree();
-                    }
-                    circleMouse.Visible = true;
+                GD.Print("Stop fishing!");
+                state = States.FISH;
+                if(GetNode<Floater>("Rode/Floater") != null){
+                    GetNode<Floater>("Rode/Floater").QueueFree();
+                }
+                circleMouse.Visible = true;
             }
         } 
     }
