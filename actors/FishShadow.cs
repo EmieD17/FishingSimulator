@@ -27,13 +27,15 @@ public class FishShadow : KinematicBody2D
 
     Label debugLabel;
     int spin_counter = 0;
-    int spin_goal;
+    public int spin_goal;
 
 
     public Boolean baited = false;
     public Vector2 baitPosition = new Vector2(0,1);
     public CollisionShape2D collisionDetectionRadius;
     public AnimationPlayer animationPlayer;
+    public Timer hoockedTimer;
+    Player player;
     public enum States{
         SWIMMING, 
         BAITED,
@@ -49,6 +51,8 @@ public class FishShadow : KinematicBody2D
         
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         collisionDetectionRadius = GetNode<CollisionShape2D>("DetectionRadius/CollisionShape2D");
+        hoockedTimer = GetNode<Timer>("HoockedTimer");
+        player = (Player)GetTree().GetNodesInGroup("player")[0];
         //Random Animation
         /*if (_random.NextDouble() >= 0.5)
         {
@@ -126,6 +130,7 @@ public class FishShadow : KinematicBody2D
         _direction = MoveAndSlide(_direction);
         if(Position.DistanceTo(baitPosition) < 25){
             animationPlayer.Play("Spin");
+            
         } 
     }
     public void Hoocked_State(float delta){
@@ -137,9 +142,17 @@ public class FishShadow : KinematicBody2D
         if(spin_counter >= spin_goal){
             animationPlayer.Play("Idle");
             state = States.HOOCKED;
+            hoockedTimer.Start();
         }
        
        
+    }
+    public void SetFree(){
+        state = FishShadow.States.SWIMMING; 
+        collisionDetectionRadius.Disabled = false; 
+        animationPlayer.Play("Idle");
+        player.theFish = null;
+        _direction = -_direction;
     }
 
     // Inverts the direction when hitting a collider.
@@ -198,5 +211,8 @@ public class FishShadow : KinematicBody2D
     public void _on_DetectionRadius_body_exited(KinematicBody2D body){
         if(body.IsInGroup("fish"))
             _local_flockmates.Remove((FishShadow)body);
+    }
+    public void _on_HoockedTimer_timeout(){
+        SetFree();
     }
 }

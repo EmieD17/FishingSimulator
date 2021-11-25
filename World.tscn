@@ -28,11 +28,11 @@ tile_data = PoolIntArray( 393204, 2, 0, 393205, 2, 1, 393206, 2, 1, 393207, 2, 1
 position = Vector2( -4.92065, -1.03459 )
 
 [node name="FishShadow1" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 209.618, 582.589 )
+position = Vector2( 107.724, 499.564 )
 isDebug = true
 
 [node name="FishShadow2" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 498.607, 602.147 )
+position = Vector2( 743.908, 670.076 )
 isDebug = true
 
 [node name="FishShadow3" parent="Fish" instance=ExtResource( 3 )]
@@ -40,11 +40,11 @@ position = Vector2( 426.104, 477.874 )
 isDebug = true
 
 [node name="FishShadow4" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 145.007, 533.225 )
+position = Vector2( -2.17363, 516.243 )
 isDebug = true
 
 [node name="FishShadow5" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 213.344, 615.718 )
+position = Vector2( 11.4424, 632.7 )
 isDebug = true
 
 [node name="FishShadow6" parent="Fish" instance=ExtResource( 3 )]
@@ -52,22 +52,22 @@ position = Vector2( 524.992, 516.83 )
 isDebug = true
 
 [node name="FishShadow7" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 276.925, 588.096 )
+position = Vector2( 256.169, 561.679 )
 
 [node name="FishShadow8" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 249.045, 550.354 )
+position = Vector2( 238.034, 546.119 )
 
 [node name="FishShadow9" parent="Fish" instance=ExtResource( 3 )]
 position = Vector2( 329.953, 542.862 )
 
 [node name="FishShadow10" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 420.196, 555.045 )
+position = Vector2( 382.457, 721.095 )
 
 [node name="FishShadow11" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 361.762, 571.527 )
+position = Vector2( 497.285, 520.706 )
 
 [node name="FishShadow12" parent="Fish" instance=ExtResource( 3 )]
-position = Vector2( 318.981, 615.649 )
+position = Vector2( 156.705, 640.179 )
 
 [node name="Props" type="TileMap" parent="."]
 position = Vector2( -31.4646, 79.4103 )

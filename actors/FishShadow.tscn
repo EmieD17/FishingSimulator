@@ -108,5 +108,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="HoockedTimer" type="Timer" parent="."]
+wait_time = 4.0
+
 [connection signal="body_entered" from="DetectionRadius" to="." method="_on_DetectionRadius_body_entered"]
 [connection signal="body_exited" from="DetectionRadius" to="." method="_on_DetectionRadius_body_exited"]
+[connection signal="timeout" from="HoockedTimer" to="." method="_on_HoockedTimer_timeout"]
