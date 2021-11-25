@@ -13,7 +13,8 @@ public class Player : KinematicBody2D
     public enum States{
         MOVE, 
         FISH,
-        FISHING
+        FISHING,
+        RIM
     }
 
     public States state = States.MOVE;
@@ -26,6 +27,10 @@ public class Player : KinematicBody2D
     Sprite spriteFishing;
     Sprite spriteRode;
     Node2D circleMouse;
+    KinematicBody2D floater;
+    PackedScene floaterScene;
+    public Floater floaterInstance;
+    public FishShadow theFish;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -40,6 +45,7 @@ public class Player : KinematicBody2D
         spriteRode = GetNode<Sprite>("SpriteFishingRode");
 
         circleMouse = GetNode<Node2D>("CanvasLayer/CircleMouse");
+        floaterScene = ResourceLoader.Load<PackedScene>("res://actors/Floater.tscn");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -60,6 +66,11 @@ public class Player : KinematicBody2D
             case States.FISHING:
             {
                 Fishing_State(delta);
+                break;
+            }
+            case States.RIM:
+            {
+                Rim_State(delta);
                 break;
             }
             default: break;
@@ -117,6 +128,13 @@ public class Player : KinematicBody2D
             GD.Print("I'm fishing!");
             state = States.FISHING;
             circleMouse.Visible = false;
+            /*floater.Position = circleMouse.Position;
+            floater.Visible = true;*/
+
+            floaterInstance = (Floater)floaterScene.Instance();
+            var position = circleMouse.Position - (GetViewport().GetVisibleRect().Size / 2) + GetNode<Camera2D>("Camera2D").GlobalPosition;;
+            floaterInstance.Position = position;
+            GetNode<Node>("Rode").AddChild(floaterInstance);  
         }
         
         if(Input.IsActionJustPressed("fish")|Input.IsActionJustPressed("ui_right")|Input.IsActionJustPressed("ui_down")|Input.IsActionJustPressed("ui_up")|Input.IsActionJustPressed("ui_left")){
@@ -134,19 +152,28 @@ public class Player : KinematicBody2D
     }
     public void Fishing_State(float delta)
     {
-        
         if(Input.IsActionJustPressed("fish")){
             animationState.Travel("StartFishing");
-            //animationPlayer.PlayBackwards();
             GD.Print("Stop fishing!");
             state = States.FISH;
+            //floater.Visible = false;
+            if(GetNode<Floater>("Rode/Floater") != null){
+                GetNode<Floater>("Rode/Floater").QueueFree();
+            }
             circleMouse.Visible = true;
+            if(theFish!=null){theFish.state = FishShadow.States.SWIMMING; theFish.collisionDetectionRadius.Disabled = false; theFish.animationPlayer.Play("Idle");}
+            theFish = null;
         } 
+    }
+    public void Rim_State(float delta){
+
     }
 
     public void ShootRode_Animation_Finished()
     {
-        //state = States.MOVE;
+       // GD.Print("shot the floater!");
+        //floater.Visible = true;
+        //GetNode<Node2D>("Rode").AddChild(floaterInstance); 
     }
 
     public override void _Input(InputEvent @event)

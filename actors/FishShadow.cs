@@ -26,10 +26,20 @@ public class FishShadow : KinematicBody2D
     public Boolean isDebug = false;
 
     Label debugLabel;
+    int spin_counter = 0;
+    int spin_goal;
 
-    private Timer fishSpawningTimer;
 
-    Boolean baited = false;
+    public Boolean baited = false;
+    public Vector2 baitPosition = new Vector2(0,1);
+    public CollisionShape2D collisionDetectionRadius;
+    public AnimationPlayer animationPlayer;
+    public enum States{
+        SWIMMING, 
+        BAITED,
+        HOOCKED
+    }
+    public States state = States.SWIMMING;
 
 
 
@@ -37,7 +47,8 @@ public class FishShadow : KinematicBody2D
     public override void _Ready()
     {
         
-        var animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        collisionDetectionRadius = GetNode<CollisionShape2D>("DetectionRadius/CollisionShape2D");
         //Random Animation
         /*if (_random.NextDouble() >= 0.5)
         {
@@ -71,29 +82,66 @@ public class FishShadow : KinematicBody2D
     //Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        if(!baited)
+        switch(state)
         {
-            //Rotation = new Vector2(0,1).AngleToPoint(_direction);
-            Rotation = _direction.Angle();
-            var temp =  _direction * _speed;
-
-            collision = MoveAndCollide(temp);
-            if(collision != null){
-                if(collision.Collider is TileMap){
-                    _direction = _collision_reaction_direction(collision);
-                }
+            case States.SWIMMING:
+            {
+                Swimming_State(delta);
+                break;
             }
-            else{
-                _direction = _flock_direction();
+            case States.BAITED:
+            {
+                Baited_State(delta);
+                break;
             }
-
-            
-        } else {
-
+            case States.HOOCKED:
+            {
+                Hoocked_State(delta);
+                break;
+            }
+            default: break;
         }
 
         debug();
     }
+    public void Swimming_State(float delta)
+    {
+        //Rotation = new Vector2(0,1).AngleToPoint(_direction);
+        Rotation = _direction.Angle();
+        var temp =  _direction * _speed;
+
+        collision = MoveAndCollide(temp);
+        if(collision != null){
+            if(collision.Collider is TileMap){
+                _direction = _collision_reaction_direction(collision);
+            }
+        }
+        else{
+            _direction = _flock_direction();
+        }
+    }
+    public void Baited_State(float delta){
+        _direction = Position.DirectionTo(baitPosition) * _speed * 50;
+        Rotation = _direction.Angle();
+        _direction = MoveAndSlide(_direction);
+        if(Position.DistanceTo(baitPosition) < 25){
+            animationPlayer.Play("Spin");
+        } 
+    }
+    public void Hoocked_State(float delta){
+
+    }
+    public void Spin_Animation_Finished()
+    {
+        spin_counter++;
+        if(spin_counter >= spin_goal){
+            animationPlayer.Play("Idle");
+            state = States.HOOCKED;
+        }
+       
+       
+    }
+
     // Inverts the direction when hitting a collider.
     // This implementation handles colliding with Tilemaps specifically.
     public Vector2 _collision_reaction_direction(KinematicCollision2D collision){
@@ -115,14 +163,13 @@ public class FishShadow : KinematicBody2D
             if(distance < _separation_distance){
               separation -= (flockmate.Position - this.Position).Normalized() * (_separation_distance / distance * _speed);
             }
-			
         }
 
         if(_local_flockmates.Count > 0){
             heading /= _local_flockmates.Count;
             cohesion /= _local_flockmates.Count;
             var center_direction = Position.DirectionTo(cohesion);
-            var circleShape2D = (CircleShape2D)GetNode<CollisionShape2D>("DetectionRadius/CollisionShape2D").Shape;
+            var circleShape2D = (CircleShape2D)collisionDetectionRadius.Shape;
             var center_speed = _maxSpeed * this.Position.DistanceTo(cohesion) / circleShape2D.Radius;
             cohesion = center_direction * center_speed;
         }
@@ -134,7 +181,6 @@ public class FishShadow : KinematicBody2D
             cohesion * COHESION_WEIGHT
         ).Clamped(_maxSpeed);
     }
-
 
     public Vector2 get_direction(){
         return _direction;
@@ -149,7 +195,6 @@ public class FishShadow : KinematicBody2D
         if(body.IsInGroup("fish"))
             _local_flockmates.Add((FishShadow)body);
     }
-	
     public void _on_DetectionRadius_body_exited(KinematicBody2D body){
         if(body.IsInGroup("fish"))
             _local_flockmates.Remove((FishShadow)body);

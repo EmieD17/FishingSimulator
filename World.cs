@@ -38,7 +38,11 @@ public class World : Node
         }
         else{
             //GD.Print("Erase!");
-            GetNode<Node2D>("Fish").GetChild(0).QueueFree();
+            FishShadow fishToErase = (FishShadow)GetNode<Node2D>("Fish").GetChild(0);
+            if(fishToErase.state == FishShadow.States.SWIMMING){
+                fishToErase.QueueFree();
+            }
+            
         }
     }
 

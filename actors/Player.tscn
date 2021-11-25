@@ -11,7 +11,7 @@ radius = 19.9086
 height = 2.94337
 
 [sub_resource type="Animation" id=2]
-length = 0.4
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
@@ -89,7 +89,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id=3]
-length = 0.4
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
@@ -167,7 +167,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id=4]
-length = 0.4
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
@@ -245,7 +245,7 @@ tracks/5/keys = {
 }
 
 [sub_resource type="Animation" id=5]
-length = 0.4
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("SpriteFishing:frame")
@@ -1023,7 +1023,9 @@ graph_offset = Vector2( 243.037, 23.3622 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=45]
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"player",
+]]
 position = Vector2( -13.4543, 8.40897 )
 scale = Vector2( 0.5, 0.5 )
 collision_layer = 3
@@ -1093,21 +1095,7 @@ smoothing_enabled = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Label" type="Label" parent="CanvasLayer"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "test"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="CircleMouse" parent="CanvasLayer" instance=ExtResource( 5 )]
 visible = false
 
-[node name="Sprite" type="Sprite" parent="CanvasLayer"]
-position = Vector2( 44.4975, 35.2271 )
-scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
-hframes = 9
-vframes = 6
-frame = 10
+[node name="Rode" type="Node" parent="."]

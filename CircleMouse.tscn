@@ -6,4 +6,5 @@
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.443137 )
+position = Vector2( 1.41581, 0.707901 )
 texture = ExtResource( 1 )

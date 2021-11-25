@@ -47,10 +47,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Spin_Animation_Finished"
+} ]
+}
 
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 3.6
-height = 3.26659
+[sub_resource type="CircleShape2D" id=3]
+radius = 5.40419
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 16.3897
@@ -67,7 +80,6 @@ texture = ExtResource( 1 )
 offset = Vector2( 0.108412, -0.433647 )
 flip_h = true
 hframes = 15
-frame = 14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Idle"
@@ -75,16 +87,18 @@ anims/Idle = SubResource( 1 )
 anims/Spin = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( -0.334084, 0.556812 )
-rotation = 1.5708
+position = Vector2( 0.508712, 0.837745 )
+rotation = 1.71042
 shape = SubResource( 3 )
 
 [node name="DetectionRadius" type="Area2D" parent="."]
-visible = false
+gravity_point = true
+gravity_distance_scale = 15.771
+collision_layer = 4
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRadius"]
-position = Vector2( 0.561226, -0.56123 )
+position = Vector2( 0.982147, 0.701542 )
 shape = SubResource( 4 )
 
 [node name="debugLabel" type="Label" parent="."]
