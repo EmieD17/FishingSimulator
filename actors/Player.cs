@@ -93,10 +93,7 @@ public class Player : KinematicBody2D
         input_vector = input_vector.Normalized();
 
         if(input_vector != Vector2.Zero){
-            animationTree.Set("parameters/Idle/blend_position", input_vector);
-            animationTree.Set("parameters/Run/blend_position", input_vector);
-            animationTree.Set("parameters/Fishing/blend_position", input_vector);
-            animationTree.Set("parameters/StartFishing/blend_position", input_vector);
+            SetAnimationTreeParameters(input_vector);
             animationState.Travel("Run");
             velocity = velocity.MoveToward(input_vector * MAX_SPEED, ACCELERATION * delta);
         }
@@ -126,6 +123,9 @@ public class Player : KinematicBody2D
     {
         
         if(Input.IsActionJustPressed("left_click")){
+            var position = circleMouse.Position - (GetViewport().GetVisibleRect().Size / 2) + GetNode<Camera2D>("Camera2D").GlobalPosition;
+            var vector = this.GlobalPosition.DirectionTo(position);
+            SetAnimationTreeParameters(vector);
             animationState.Travel("Fishing");
             GD.Print("I'm fishing!");
             state = States.FISHING;
@@ -133,8 +133,10 @@ public class Player : KinematicBody2D
             /*floater.Position = circleMouse.Position;
             floater.Visible = true;*/
 
+            
+
             floater = (Floater)floaterScene.Instance();
-            var position = circleMouse.Position - (GetViewport().GetVisibleRect().Size / 2) + GetNode<Camera2D>("Camera2D").GlobalPosition;;
+
             floater.Position = position;
             GetNode<Node>("Rode").AddChild(floater);  
         }
@@ -218,5 +220,11 @@ public class Player : KinematicBody2D
             circleMouse.Position = mouse.GlobalPosition;
         }
         
+    }
+    public void SetAnimationTreeParameters(Vector2 input_vector){
+        animationTree.Set("parameters/Idle/blend_position", input_vector);
+        animationTree.Set("parameters/Run/blend_position", input_vector);
+        animationTree.Set("parameters/Fishing/blend_position", input_vector);
+        animationTree.Set("parameters/StartFishing/blend_position", input_vector);
     }
 }
