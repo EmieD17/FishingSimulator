@@ -10,14 +10,14 @@ public class Player : KinematicBody2D
     const int MAX_SPEED = 100;
     const int FRICTION = 500;
 
-    public enum States{
+    private enum States{
         MOVE, 
         FISH,
         FISHING,
-        RIM
+        REEL
     }
 
-    public States state = States.MOVE;
+    private States state = States.MOVE;
     Vector2 velocity = Vector2.Zero;
 
     AnimationPlayer animationPlayer;
@@ -47,6 +47,7 @@ public class Player : KinematicBody2D
 
         circleMouse = GetNode<Node2D>("CanvasLayer/CircleMouse");
         floaterScene = ResourceLoader.Load<PackedScene>("res://actors/Floater.tscn");
+
         scoreLabel = GetNode<Label>("CanvasLayer/Score");
         scoreLabel.Text = Global.score.ToString();
         waterSound = GetNode<AudioStreamPlayer>("Audio/WaterBloop");
@@ -72,9 +73,9 @@ public class Player : KinematicBody2D
                 Fishing_State(delta);
                 break;
             }
-            case States.RIM:
+            case States.REEL:
             {
-                Rim_State(delta);
+                Reel_State(delta);
                 break;
             }
             default: break;
@@ -117,36 +118,30 @@ public class Player : KinematicBody2D
             circleMouse.Visible = true;
             
             animationState.Travel("StartFishing");
-            GD.Print("let's fish");
+            //GD.Print("let's fish");
         }
-
     }
     public void Fish_State(float delta)
     {
-        
         if(Input.IsActionJustPressed("left_click")){
             GetNode<AudioStreamPlayer>("Audio/ShootRode").Play();
             var position = circleMouse.Position - (GetViewport().GetVisibleRect().Size / 2) + GetNode<Camera2D>("Camera2D").GlobalPosition;
             var vector = this.GlobalPosition.DirectionTo(position);
             SetAnimationTreeParameters(vector);
             
-            GD.Print("I'm fishing!");
+            //GD.Print("I'm fishing!");
             state = States.FISHING;
             circleMouse.Visible = false;
 
             floater = (Floater)floaterScene.Instance();
-
             floater.Position = position;
             animationState.Travel("Fishing");
-            /*
-            GetNode<Node>("Rode").AddChild(floater); 
-            waterSound.Play(); */
         }
         
         if(Input.IsActionJustPressed("fish")|Input.IsActionJustPressed("ui_right")|Input.IsActionJustPressed("ui_down")|Input.IsActionJustPressed("ui_up")|Input.IsActionJustPressed("ui_left")){
-        
+            //GO back to moving
             state = States.MOVE;
-            GD.Print("Stop fishing :(");
+            //GD.Print("Stop fishing :(");
             animationState.Travel("Run");
 
             velocity = Vector2.Zero;
@@ -158,86 +153,70 @@ public class Player : KinematicBody2D
     }
     public void Fishing_State(float delta)
     {
-        
         if(Input.IsActionJustPressed("fish")){
             if(theFish != null){
                 if(theFish.state == FishShadow.States.HOOCKED){
-                    //start to rim
-                    //state = States.RIM;
-                    GD.Print("I rim!");
+                    //start to reel
+                    //state = States.REEL;
+                    //GD.Print("I reel!");
                     Global.score++;
                     scoreLabel.Text = Global.score.ToString();
                     GetNode<AudioStreamPlayer>("Audio/PopScore").Play();
 
                     theFish.QueueFree();
                     theFish = null;
-                    animationState.Travel("StartFishing");
-                    state = States.FISH;
-                    if(GetNode<Floater>("Rode/Floater") != null){
-                        GetNode<Floater>("Rode/Floater").QueueFree();
-                    }
-                    circleMouse.Visible = true;
-                    
-
                 }else{       
                     //release the fish & floater
                     theFish.SetFree();
-                    animationState.Travel("StartFishing");
-                    GD.Print("Stop fishing!");
-                    state = States.FISH;
-                    if(GetNode<Floater>("Rode/Floater") != null){
-                        GetNode<Floater>("Rode/Floater").QueueFree();
-                    }
-                    circleMouse.Visible = true;
-                    
+                    //GD.Print("Stop fishing!");
                 }
             }
-            else{
-                //release the floater
-                animationState.Travel("StartFishing");
-                GD.Print("Stop fishing!");
-                state = States.FISH;
-                if(GetNode<Floater>("Rode/Floater") != null){
-                    GetNode<Floater>("Rode/Floater").QueueFree();
-                }
-                circleMouse.Visible = true;
-            }
+
+            //release the floater
+            //GD.Print("Stop fishing!");
+            Back_to_Start_Fishing();
         } 
     }
-    public void Rim_State(float delta){
+    public void Reel_State(float delta){
 
 
+    }
+    public void Back_to_Start_Fishing(){
+        animationState.Travel("StartFishing");
+        state = States.FISH;
+        if(GetNode<Floater>("Rode/Floater") != null){
+            GetNode<Floater>("Rode/Floater").QueueFree();
+        }
+        circleMouse.Visible = true;
     }
 
     public void ShootRode_Animation_Finished()
     {
-        GD.Print("shot the floater!");
+        //GD.Print("shot the floater!");
         GetNode<Node>("Rode").AddChild(floater); 
         waterSound.Play();
     }
 
     public override void _Input(InputEvent @event)
     {
-        if(@event is InputEventMouseMotion mouse)
-        {            
+        if(@event is InputEventMouseMotion mouse){            
             circleMouse.Position = mouse.GlobalPosition;
         }
-        if(@event.IsActionReleased("debug"))
-        {            
+
+        if(@event.IsActionReleased("debug")){            
             Global.debug = !Global.debug;
             GD.Print("debug!");
         }
-        if(@event.IsActionReleased("world2"))
-        {            
+
+        if(@event.IsActionReleased("world2")){            
             if(GetTree().CurrentScene.Name == "World")
                 GetTree().ChangeScene("res://World2.tscn");
         }
-        if(@event.IsActionReleased("world1"))
-        {            
+
+        if(@event.IsActionReleased("world1")){            
             if(GetTree().CurrentScene.Name == "World2")
                 GetTree().ChangeScene("res://World.tscn");
         }
-        
     }
     public void SetAnimationTreeParameters(Vector2 input_vector){
         animationTree.Set("parameters/Idle/blend_position", input_vector);

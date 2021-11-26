@@ -25,12 +25,9 @@ public class FishShadow : KinematicBody2D
     Label debugLabel;
     int spin_counter = 0;
     public int spin_goal;
-
-
-    public Boolean baited = false;
     public Vector2 baitPosition = new Vector2(0,1);
     public CollisionShape2D collisionDetectionRadius;
-    public AnimationPlayer animationPlayer;
+    AnimationPlayer animationPlayer;
     public Timer hoockedTimer;
     Player player;
     public enum States{
@@ -53,41 +50,16 @@ public class FishShadow : KinematicBody2D
         debugLabel = GetNode<Label>("debugLabel");
         debugLabel.Visible = false;
         GetTree().DebugCollisionsHint = true;
-        //Random Animation
-        /*if (_random.NextDouble() >= 0.5)
-        {
-            animationPlayer.Play("Spin");
-        } */
-/*
-        fishSpawningTimer = GetNode<Timer>("FishSpawningTimer");
-        fishSpawningTimer.WaitTime = _random.Next(2,8);
-        fishSpawningTimer.Start();
-*/
+
+        // -Random sized fish
         float scaleNb = (float)(_random.NextDouble() * (2.5 - 1) + 1);
         Vector2 scale = new Vector2(scaleNb, scaleNb);
         this.Scale = scale;
         
         var random = new RandomNumberGenerator();
         random.Randomize();
-
+        // -Random direction
         _direction = new Vector2(random.Randfn(), random.Randfn());
-    }
-    public void debug(){
-        if(!Global.debug){
-            if(debugLabel.Visible){
-               debugLabel.Visible = false; 
-               collisionDetectionRadius.Hide();
-            }
-                
-        }
-        else{
-            if(!debugLabel.Visible){
-               debugLabel.Visible = true; 
-               collisionDetectionRadius.Show();
-               
-            }
-            debugLabel.Text = "(" +Position.x.ToString("0.00") + ", " + Position.y.ToString("0.00") + ")";
-        }
     }
 
     //Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -117,11 +89,8 @@ public class FishShadow : KinematicBody2D
     }
     public void Swimming_State(float delta)
     {
-        //Rotation = new Vector2(0,1).AngleToPoint(_direction);
         Rotation = _direction.Angle();
-        var temp =  _direction * _speed;
-
-        collision = MoveAndCollide(temp);
+        collision = MoveAndCollide(_direction * _speed);
         if(collision != null){
             if(collision.Collider is TileMap){
                 _direction = _collision_reaction_direction(collision);
@@ -137,7 +106,6 @@ public class FishShadow : KinematicBody2D
         _direction = MoveAndSlide(_direction);
         if(Position.DistanceTo(baitPosition) < 30){
             animationPlayer.Play("Spin");
-            
         } 
     }
     public void Hoocked_State(float delta){
@@ -153,8 +121,6 @@ public class FishShadow : KinematicBody2D
             player.waterSound.Play();
             hoockedTimer.Start();
         }
-       
-       
     }
     public void SetFree(){
         player.floater.animationPlayer.Play("Float");
@@ -203,6 +169,21 @@ public class FishShadow : KinematicBody2D
             heading * ALIGNMENT_WEIGHT +
             cohesion * COHESION_WEIGHT
         ).Clamped(_maxSpeed);
+    }
+    public void debug(){
+        if(!Global.debug){
+            if(debugLabel.Visible){
+               debugLabel.Visible = false; 
+               collisionDetectionRadius.Hide();
+            }   
+        }
+        else{
+            if(!debugLabel.Visible){
+               debugLabel.Visible = true; 
+               collisionDetectionRadius.Show();
+            }
+            debugLabel.Text = "(" +Position.x.ToString("0.00") + ", " + Position.y.ToString("0.00") + ")";
+        }
     }
 
     public Vector2 get_direction(){

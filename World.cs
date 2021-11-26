@@ -3,16 +3,10 @@ using System;
 
 public class World : Node
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
- 
     RandomNumberGenerator random = new RandomNumberGenerator();
     private Timer fishSpawningTimer;
     PackedScene fishScene;
-
-    public Godot.Collections.Array fishArray;
-
+    Godot.Collections.Array fishArray;
     Player player;
 
     // Called when the node enters the scene tree for the first time.
@@ -22,11 +16,9 @@ public class World : Node
         fishSpawningTimer.Start();
         fishScene = ResourceLoader.Load<PackedScene>("res://actors/FishShadow.tscn");
         
-        
         player = GetNode<Player>("YSort/Player");
 
         random.Randomize();
-        
     }
     public void _on_FishSpawningTimer_timeout()
     {
@@ -42,8 +34,7 @@ public class World : Node
             FishShadow fishToErase = (FishShadow)GetNode<Node2D>("Fish").GetChild(0);
             if(fishToErase.state == FishShadow.States.SWIMMING){
                 fishToErase.QueueFree();
-            }
-            
+            } 
         }
     }
 
@@ -66,11 +57,6 @@ public class World : Node
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     { 
-        
-        /*
-        if(Input.IsActionJustPressed("ui_cancel")) {
-            GetTree().Quit();
-        }*/
+
     }
-    
 }

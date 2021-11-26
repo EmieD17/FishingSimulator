@@ -24,16 +24,13 @@ public class Floater : KinematicBody2D
         if(player.theFish == null){
             if(body.IsInGroup("fish")){
                 FishShadow fish = (FishShadow)body;
-                //fish.spin_goal = random.RandiRange(1,2);
-                fish.spin_goal = 2;
+                // -Random num of spin for the baited fish before it bites
+                fish.spin_goal = random.RandiRange(1,4);
+
                 player.theFish = fish;
                 fish.state = FishShadow.States.BAITED;
-                
                 fish.baitPosition = GlobalPosition;
                 fish.collisionDetectionRadius.Disabled = true;
-               
-
-                GD.Print("the floater got a fish ( )< !");
             }
         }
     }
@@ -46,7 +43,6 @@ public class Floater : KinematicBody2D
     public void debug(){
         if(!Global.debug){
             collisionDetectionZone.Hide();
-                
         }
         else{
             collisionDetectionZone.Show();

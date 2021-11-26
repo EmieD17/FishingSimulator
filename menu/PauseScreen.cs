@@ -3,10 +3,6 @@ using System;
 
 public class PauseScreen : Control
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
-
     VBoxContainer menu;
     VBoxContainer controls;
 
@@ -20,22 +16,17 @@ public class PauseScreen : Control
 
     public override void _Input(InputEvent @event)
     {
-        if(@event.IsActionPressed("ui_cancel"))
-        {
+        if(@event.IsActionPressed("ui_cancel")){
             GetTree().Paused = !GetTree().Paused;
             Visible = !Visible;
         }
-        
     }
-
-    public void _on_Resume_pressed()
-    {
+    public void _on_Resume_pressed(){
         GetTree().Paused = !GetTree().Paused;
         Visible = !Visible;
     }
 
-    public void _on_Quit_pressed()
-    {
+    public void _on_Quit_pressed(){
         PackedScene TitleScreen = GD.Load<PackedScene>("res://menu/TitleScreen.tscn");
         GetTree().Paused = false;
         GetTree().ChangeSceneTo(TitleScreen);        
@@ -49,9 +40,7 @@ public class PauseScreen : Control
         controls.Visible = false;
     }
 
-
-
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
+    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
         if(GetNode<TextureButton>("MarginContainer/CenterContainer/VBoxContainer/Resume").IsHovered())
